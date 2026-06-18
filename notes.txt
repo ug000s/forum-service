@@ -1,0 +1,2 @@
+npm i express mongoose joi crossenv
+npm i dotenv jest supertest nodemon -D
