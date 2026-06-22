@@ -1,13 +1,22 @@
+import * as postRepository from "../repositories/post.repository.js";
+
 export const createPost = async (author, data) => {
-    // TODO
+    const tags = [...new Set(data.tags)];
+    return await postRepository.createPost({author, ...data, tags});
 }
 
 export const getPostById = async (id) => {
-    // TODO
+    const post = await postRepository.findPostById(id)
+    if(!post)
+        throw new Error(`Post with id = ${id} not found`);
+    return post;
 }
 
 export const deletePost = async (id) => {
-    // TODO
+    const post = await postRepository.deletePost(id);
+    if(!post)
+        throw new Error(`Post with id = ${id} not found`);
+    return post;
 }
 
 export const addLike = async (id) => {

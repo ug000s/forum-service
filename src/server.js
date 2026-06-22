@@ -1,32 +1,34 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import mongoose from 'mongoose';
-import postRouter from './routes/post.routes.js';
-
-dotenv.config();
-const port = process.env.PORT || 8080;
+import express from "express";
+import config from "./configuration/config.js";
+import mongoose from "mongoose";
+import postRoutes from "./routes/post.routes.js";
+import errorHandler from "./middlewares/error.middleware.js";
 
 const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(postRouter);
 
-// 404
-app.use((req, res) => res.status(404).type('text/plain', {charset: 'utf-8'}).send('Not Found'));
+app.use('/forum', postRoutes);
+
+app.use(errorHandler);
+
+const connectDB = async () => {
+  try {
+    await mongoose.connect(config.mongodb.uri, config.mongodb.db);
+    console.log('Connected to MongoDB');
+  } catch (e) {
+    console.error('Failed connecting to MongoDB: ', e);
+    // process.exit(1);// use when i want to stop the server if mongodb is not available
+  }
+}
 
 async function startServer() {
-  try {
-    await mongoose.connect(process.env.MONGO_URI, {dbName: process.env.DB_NAME});
-    console.log('Connected to MongoDB');
-    app.listen(port, () => {
-      console.log(`Server is running on port ${port}`);
-      console.log(`Press Ctrl+C to stop the server`);
-    });
-  } catch (error) {
-    console.error('Failed to connect to MongoDB', error);
-    // process.exit(1);
-  }
+  await connectDB();
+  app.listen(config.port, () => {
+    console.log(`Server is running on port ${config.port}`);
+    console.log(`Press Ctrl+C to stop the server`);
+  });
 }
 
 startServer();

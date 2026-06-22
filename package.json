@@ -2,7 +2,6 @@
   "name": "forum-service",
   "version": "1.0.0",
   "description": "forum web service",
-  "main": "index.js",
   "scripts": {
     "dev": "nodemon src/server.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
@@ -12,7 +11,7 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
-    "crossenv": "^0.0.2-security",
+    "cross-env": "^10.1.0",
     "express": "^5.2.1",
     "joi": "^18.2.3",
     "mongoose": "^9.7.1"
