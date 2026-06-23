@@ -2,14 +2,15 @@ import express from "express";
 import config from "./configuration/config.js";
 import mongoose from "mongoose";
 import postRoutes from "./routes/post.routes.js";
+import userRoutes from "./routes/userAccount.routes.js";
 import errorHandler from "./middlewares/error.middleware.js";
 
 const app = express();
 
-// Middleware
 app.use(express.json());
 
 app.use('/forum', postRoutes);
+app.use('/account', userRoutes);
 
 app.use(errorHandler);
 
@@ -24,10 +25,7 @@ const connectDB = async () => {
 
 async function startServer() {
     await connectDB();
-    app.listen(config.port, () => {
-        console.log(`Server is running on port ${config.port}`);
-        console.log(`Press Ctrl+C to stop the server`);
-    });
+    app.listen(config.port, () => console.log(`Server is running on port ${config.port}. Press Ctrl-C to quit.`));
 }
 
 startServer();
