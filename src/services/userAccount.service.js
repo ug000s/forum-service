@@ -1,5 +1,12 @@
+import * as userAccountRepository from '../repositories/userAccount.repository.js';
+
 export const register = async (user) => {
-    // TODO: Implement user registration logic
+    try {
+        return await userAccountRepository.addUser(user);
+    } catch (e) {
+        console.log(e);
+        throw new Error('User already exists');
+    }
 }
 
 export const removeUser = async (login) => {
