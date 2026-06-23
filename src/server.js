@@ -14,21 +14,20 @@ app.use('/forum', postRoutes);
 app.use(errorHandler);
 
 const connectDB = async () => {
-  try {
-    await mongoose.connect(config.mongodb.uri, config.mongodb.db);
-    console.log('Connected to MongoDB');
-  } catch (e) {
-    console.error('Failed connecting to MongoDB: ', e);
-    // process.exit(1);// use when i want to stop the server if mongodb is not available
-  }
+    try {
+        await mongoose.connect(config.mongodb.uri, config.mongodb.db);
+        console.log('Connected to MongoDB');
+    } catch (e) {
+        console.log('Failed connecting to MongoDB: ', e);
+    }
 }
 
 async function startServer() {
-  await connectDB();
-  app.listen(config.port, () => {
-    console.log(`Server is running on port ${config.port}`);
-    console.log(`Press Ctrl+C to stop the server`);
-  });
+    await connectDB();
+    app.listen(config.port, () => {
+        console.log(`Server is running on port ${config.port}`);
+        console.log(`Press Ctrl+C to stop the server`);
+    });
 }
 
 startServer();

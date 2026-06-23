@@ -11,6 +11,6 @@ router.get('/posts/author/:author', getPostsByAuthor);
 router.patch('/post/:id/comment/:commenter', addComment);
 router.get('/posts/tags', getPostsByTags);
 router.get('/posts/period', getPostsByPeriod);
-router.put('/post/:id', updatePost);
+router.patch('/post/:id', updatePost);
 
 export default router;
