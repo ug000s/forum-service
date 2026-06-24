@@ -4,17 +4,24 @@ export const register = async (user) => {
     try {
         return await userAccountRepository.addUser(user);
     } catch (e) {
-        console.log(e);
         throw new Error('User already exists');
     }
 }
 
 export const removeUser = async (login) => {
-    // TODO: Implement user removal logic
+    const userAccount = await userAccountRepository.removeUser(login);
+    if (!userAccount) {
+        throw new Error(`User with login ${login} not found`);
+    }
+    return userAccount;
 }
 
 export const updateUser = async (login, updateData) => {
-    // TODO: Implement user update logic
+    const userAccount = await userAccountRepository.updateUser(login, updateData);
+    if (!userAccount) {
+        throw new Error(`User with login '${login}' not found`);
+    }
+    return userAccount;
 }
 
 export const changeRoles = async (login, role, isAddRole) => {
