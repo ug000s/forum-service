@@ -6,10 +6,16 @@ export const removeUser = async (login) => UserAccount.findByIdAndDelete(login, 
 
 export const updateUser = async (login, updateData) => UserAccount.findByIdAndUpdate(login, updateData, {returnDocument: 'after'}).exec();
 
-export const addRole = async (login, role) => UserAccount.findByIdAndUpdate(login,{$addToSet: {roles: role}}, {returnDocument: 'after'}).exec();
+export const addRole = async (login, role) => UserAccount.findByIdAndUpdate(login, {$addToSet: {roles: role}}, {returnDocument: 'after'}).exec();
 
-export const removeRole = async (login, role) => UserAccount.findByIdAndUpdate(login,{$pull: {roles: role}}, {returnDocument: 'after'}).exec();
+export const removeRole = async (login, role) => UserAccount.findByIdAndUpdate(login, {$pull: {roles: role}}, {returnDocument: 'after'}).exec();
 
 export const findUser = async (login) => UserAccount.findById(login).exec();
 
-export const changePassword = async (login, newPasssword) => UserAccount.findByIdAndUpdate(login, {password: newPasssword}, {returnDocument: 'after'}).exec();
+export const changePassword = async (login, newPassword) => {
+    const userAccount = await UserAccount.findById(login).exec();
+    if (userAccount) {
+        userAccount.password = newPassword;
+        return userAccount.save();
+    }
+}
