@@ -26,17 +26,25 @@ const userAccountSchema = new Schema({
 }, {
     versionKey: false,
     toJSON: {
-        transform: (doc, ret) => {
+        transform: (doc, ret, options) => {
             ret.login = doc._id;
             delete ret.password;
             delete ret._id;
+            if(options?.hidePersonal){
+                delete ret.firstName;
+                delete ret.lastName;
+            }
         }
     },
     toObject: {
-        transform: (doc, ret) => {
+        transform: (doc, ret, options) => {
             ret.login = doc._id;
             delete ret.password;
             delete ret._id;
+            if(options?.hidePersonal){
+                delete ret.firstName;
+                delete ret.lastName;
+            }
         }
     }
 });

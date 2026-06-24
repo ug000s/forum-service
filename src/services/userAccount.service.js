@@ -35,7 +35,7 @@ export const changeRoles = async (login, role, isAddRole) => {
     if (!userAccount) {
         throw new Error(`User with login '${login}' not found`);
     }
-    return userAccount;
+    return userAccount.toObject({hidePersonal: true});
 }
 
 export const changePassword = async (login, newPassword) => {
