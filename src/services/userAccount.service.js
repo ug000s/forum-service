@@ -38,6 +38,18 @@ export const changeRoles = async (login, role, isAddRole) => {
     return userAccount;
 }
 
-export const changePassword = async (login, newPassword) => await userAccountRepository.changePassword(login, newPassword);
+export const changePassword = async (login, newPassword) => {
+    const userAccount = await userAccountRepository.changePassword(login, newPassword);
+    if (!userAccount) {
+        throw new Error(`User with login '${login}' not found`);
+    }
+    return userAccount;
+}
 
-export const getUser = async (login) => await userAccountRepository.getUser(login);
+export const getUser = async (login) => {
+    const userAccount = await userAccountRepository.findUser(login);
+    if (!userAccount) {
+        throw new Error(`User with login '${login}' not found`);
+    }
+    return userAccount;
+}
