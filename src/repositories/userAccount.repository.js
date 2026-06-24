@@ -5,3 +5,11 @@ export const addUser = async (user) => UserAccount.create(user);
 export const removeUser = async (login) => UserAccount.findByIdAndDelete(login, {returnDocument: 'after'}).exec();
 
 export const updateUser = async (login, updateData) => UserAccount.findByIdAndUpdate(login, updateData, {returnDocument: 'after'}).exec();
+
+export const addRole = async (login, role) => UserAccount.findByIdAndUpdate(login, {$addToSet: {roles: role.toUpperCase()}}, {returnDocument: 'after', projection: {login: 1, roles: 1}}).exec();
+
+export const removeRole = async (login, role) => UserAccount.findByIdAndUpdate(login, {$pull: {roles: role.toUpperCase()}}, {returnDocument: 'after', projection: {login: 1, roles: 1}}).exec();
+
+export const getUser = async (login) => UserAccount.findById(login).exec();
+
+export const changePassword = async (login, newPassword) => UserAccount.findByIdAndUpdate(login, {password: newPassword}).exec();

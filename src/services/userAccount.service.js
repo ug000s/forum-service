@@ -25,13 +25,13 @@ export const updateUser = async (login, updateData) => {
 }
 
 export const changeRoles = async (login, role, isAddRole) => {
-    // TODO: Implement user role change logic
+    if (isAddRole) {
+        return await userAccountRepository.addRole(login, role);
+    } else {
+        return await userAccountRepository.removeRole(login, role);
+    }
 }
 
-export const changePassword = async (login, newPassword) => {
-    // TODO: Implement user password change logic
-}
+export const changePassword = async (login, newPassword) => await userAccountRepository.changePassword(login, newPassword);
 
-export const getUser = async (login) => {
-    // TODO: Implement user retrieval logic
-}
+export const getUser = async (login) => await userAccountRepository.getUser(login);
