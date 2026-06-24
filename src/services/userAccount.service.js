@@ -35,8 +35,7 @@ export const changeRoles = async (login, role, isAddRole) => {
     if (!userAccount) {
         throw new Error(`User with login '${login}' not found`);
     }
-    const {firstName, lastName, ...userRoles} = userAccount.toObject();
-    return userRoles;
+    return userAccount;
 }
 
 export const changePassword = async (login, newPassword) => await userAccountRepository.changePassword(login, newPassword);
