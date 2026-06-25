@@ -6,13 +6,23 @@ import userRoutes from "./routes/userAccount.routes.js";
 import errorHandler from "./middlewares/error.middleware.js";
 import authentication from "./middlewares/authentication.middleware.js";
 import {createAdmin} from "./configuration/initAdmin.js";
+import {hasRole} from "./middlewares/authorization.middleware.js";
+import {ADMIN} from "./configuration/constants.js";
 
 const app = express();
 
+const authorizationRouter = express.Router();
+
 app.use(express.json());
 app.use(authentication);
+
+authorizationRouter.patch('/account/user/:login/role/:role', hasRole(ADMIN))
+authorizationRouter.delete('/account/user/:login/role/:role', hasRole(ADMIN))
+
+app.use(authorizationRouter);
 app.use('/forum', postRoutes);
 app.use('/account', userRoutes);
+
 app.use(errorHandler);
 
 const connectDB = async () => {
