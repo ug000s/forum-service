@@ -18,6 +18,7 @@ app.use('/forum', postRoutes);
 app.use('/account', userRoutes);
 
 app.use(errorHandler);
+app.use((req, res) => res.status(404).json({message: 'Not found'}));
 
 const connectDB = async () => {
     try {
