@@ -4,6 +4,7 @@
   "description": "forum web service",
   "scripts": {
     "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "keywords": [],

@@ -9,3 +9,11 @@ npm i cors
 В файле userAccountControllerCodex.test.js реализуй интеграционный тест на следующих условиях: 1. Используй jest и supertest; 2. Замокай userAccount.service.js 3. Тестируй верные и ошибочные запросы, включая работу валидатора. 4. Комментарии к коду пиши на английском языке. 5. Если необходима дополнительная информация спрашивай явно. 6. Если необходимы изменения в других файлах запрашивай мое разрешение . Папка проекта /Users/ijn/projects/NodeJS/G82BE/forum-service
 
 В файле postServiceCodex.test.js реализуй юнит тесты на следующих условиях: 1. Используй jest; 2. Замокай post.repository.js 3. Тестируй верные и ошибочные запросы, включая работу валидатора. 4. Комментарии к коду пиши на английском языке. 5. Если необходима дополнительная информация спрашивай явно. 6. Если необходимы изменения в других файлах запрашивай мое разрешение. В файле userAccountServiceCodex.test.js сделай юнит тесты для userAccount.repository.js. Папка проекта /Users/ijn/projects/NodeJS/G82BE/forum-service
+
+docker build -t ijn123/forum-service:latest ijn123/forum-service:0.1.0 .
+docker run --name forum --env-file .env -d -p 8080:8080 ijn123/forum-service
+docker stop forum
+docker rm forum
+docker run --name forum -e PORT=8080 -e DB_NAME=cohort82 -e MONGO_URI='mongodb+srv://ijn123:password@cluster0.6bk0kqf.mongodb.net/?appName=Cluster0' -d -p 8080:8080 ijn123/forum-service
+docker push -a ijn123/forum-service
+docker exec -it forum sh
